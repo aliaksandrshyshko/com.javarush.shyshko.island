@@ -3,6 +3,9 @@ package main.java.com.javarush.shyshko.island.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public class Location {
     private final int x;
     private final int y;
@@ -12,18 +15,6 @@ public class Location {
     public Location(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public List<Organism> getOrganisms() {
-        return organisms;
     }
 
     public void addOrganism(Organism o) {

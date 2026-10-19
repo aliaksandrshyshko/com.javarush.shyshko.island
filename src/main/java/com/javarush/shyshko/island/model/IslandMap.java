@@ -1,5 +1,8 @@
 package main.java.com.javarush.shyshko.island.model;
 
+import lombok.Getter;
+
+@Getter
 public class IslandMap {
     private final int width;
     private final int height;
@@ -27,11 +30,4 @@ public class IslandMap {
         return null;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 }

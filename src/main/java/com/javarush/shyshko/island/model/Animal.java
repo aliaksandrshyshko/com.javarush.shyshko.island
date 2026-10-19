@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public abstract class Animal extends Organism {
 
     protected double maxWeight;
@@ -30,27 +35,6 @@ public abstract class Animal extends Organism {
         this.icon = icon;
     }
 
-    @Override
-    public String getIcon() {
-        return icon;
-    }
-
-    public boolean isDead() {
-        return isDead;
-    }
-
-    public void die() {
-        this.isDead = true;
-    }
-
-    public boolean hasMultipliedThisStep() {
-        return hasMultipliedThisStep;
-    }
-
-    public void setHasMultipliedThisStep(boolean multiplied) {
-        this.hasMultipliedThisStep = multiplied;
-    }
-
     public void eat(Location loc) {
         if (isDead || currentSatiety >= foodNeeded ) {
             return;
@@ -61,7 +45,7 @@ public abstract class Animal extends Organism {
         for (Object food : targets) {
             if (this instanceof Wolf && food instanceof Rabbit rabbit) {
                 if (!rabbit.isDead() && rand.nextInt(100) < 60) {
-                    rabbit.die();
+                    rabbit.setDead(true);
                     loc.removeOrganism(rabbit);
                     this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + rabbit.getWeight());
                     System.out.println(this.getIcon() + " съел " + rabbit.getIcon());
@@ -96,7 +80,7 @@ public abstract class Animal extends Organism {
         for (Object o : list) {
             if (o.getClass().equals(this.getClass()) && o != this) {
                 Animal potential = (Animal) o;
-                if (!potential.isDead() && !potential.hasMultipliedThisStep()) {
+                if (!potential.isDead() && !potential.isHasMultipliedThisStep()) {
                     partner = potential;
                     break;
                 }
@@ -168,7 +152,7 @@ public abstract class Animal extends Organism {
     public void passStep() {
         this.currentSatiety -= (this.foodNeeded * 0.15);
         if(this.currentSatiety <= 0) {
-            die();
+            setDead(true);
             System.out.println(this.getIcon() + " умер от голода");
         } else {
             String satietyStr = String.format("%.2f", this.currentSatiety);
