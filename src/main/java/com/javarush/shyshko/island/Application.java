@@ -22,9 +22,9 @@ public class Application {
          List<Plant> plants = cell.getOrganismsOfType(Plant.class);
 
          System.out.println("\n--- Результаты фильтрации через Generics ---");
-         System.out.println("Найдено волков: " + wolves.size() + " " + (wolves.isEmpty() ? "" : wolves.get(0).getIcon()));
-         System.out.println("Найдено кроликов: " + rabbits.size() + " " + (rabbits.isEmpty() ? "" : rabbits.get(0).getIcon()));
-         System.out.println("Найдено растений: " + plants.size() + " " + (plants.isEmpty() ? "" : plants.get(0).getIcon()));
+         System.out.println("Найдено волков: " + wolves.size() + " " + (wolves.isEmpty() ? "" : wolves.getFirst().getIcon()));
+         System.out.println("Найдено кроликов: " + rabbits.size() + " " + (rabbits.isEmpty() ? "" : rabbits.getFirst().getIcon()));
+         System.out.println("Найдено растений: " + plants.size() + " " + (plants.isEmpty() ? "" : plants.getFirst().getIcon()));
 
 
     }
