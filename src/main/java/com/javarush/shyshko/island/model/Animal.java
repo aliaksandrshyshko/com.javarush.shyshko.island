@@ -141,7 +141,6 @@ public abstract class Animal extends Organism {
         }
         if(count < maxOnCell) {
             myLocation.removeOrganism(this);
-            this.setMyLocation(target);
             target.addOrganism(this);
             System.out.println(this.getIcon() + " переместился в клетку [" + newX + ", " + newY + "]");
         }

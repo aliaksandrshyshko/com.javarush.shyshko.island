@@ -19,10 +19,12 @@ public class Location {
 
     public void addOrganism(Organism o) {
         organisms.add(o);
+        o.setMyLocation(this);
     }
 
     public void removeOrganism(Organism o) {
         organisms.remove(o);
+        o.setMyLocation(null);
     }
 
     public <T extends Organism> List<T> getOrganismsOfType(Class<T> clazz) {
