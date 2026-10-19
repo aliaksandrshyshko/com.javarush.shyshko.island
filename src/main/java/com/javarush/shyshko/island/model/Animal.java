@@ -6,6 +6,7 @@ import java.util.Random;
 
 import lombok.Getter;
 import lombok.Setter;
+import main.java.com.javarush.shyshko.island.factory.OrganismFactory;
 
 @Getter
 @Setter
@@ -88,18 +89,17 @@ public abstract class Animal extends Organism {
         }
 
         if(partner != null) {
-            Animal baby = spawnChild();
+            String typeName = this.getClass().getSimpleName();
+            Animal baby = (Animal) OrganismFactory.createOrganism(typeName);
             if(baby != null) {
                 baby.setMyLocation(loc);
                 loc.addOrganism(baby);
-                this.hasMultipliedThisStep = true;
+                this.setHasMultipliedThisStep(true);
                 partner.setHasMultipliedThisStep(true);
-                System.out.println("Родился " + baby.getIcon());
+                System.out.println("Фабрика создала " + baby.getIcon());
             }
         }
     }
-
-    protected abstract Animal spawnChild();
 
     public void move(IslandMap islandMap) {
         if(isDead || maxSpeed == 0) {
