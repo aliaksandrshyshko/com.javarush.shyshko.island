@@ -25,5 +25,15 @@ public class Location {
         organisms.remove(o);
     }
 
+    public <T extends Organism> List<T> getOrganismsOfType(Class<T> clazz) {
+        List<T> result = new ArrayList<>();
+        for(Organism o : organisms) {
+            if(clazz.isInstance(o)) {
+                result.add(clazz.cast(o));
+            }
+        }
+        return result;
+    }
+
 
 }
