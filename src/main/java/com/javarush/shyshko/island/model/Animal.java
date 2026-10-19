@@ -59,8 +59,7 @@ public abstract class Animal extends Organism {
         Random rand = new Random();
 
         for (Object food : targets) {
-            if (this instanceof Wolf && food instanceof Rabbit) {
-                Rabbit rabbit = (Rabbit) food;
+            if (this instanceof Wolf && food instanceof Rabbit rabbit) {
                 if (!rabbit.isDead() && rand.nextInt(100) < 60) {
                     rabbit.die();
                     loc.removeOrganism(rabbit);
@@ -68,8 +67,7 @@ public abstract class Animal extends Organism {
                     System.out.println(this.getIcon() + " съел " + rabbit.getIcon());
                     break;
                 }
-            } else if (this instanceof Rabbit && food instanceof Plant) {
-                Plant plant = (Plant) food;
+            } else if (this instanceof Rabbit && food instanceof Plant plant) {
                 loc.removeOrganism(plant);
                 this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + plant.getWeight());
                 System.out.println(this.getIcon() + " съел " + plant.getIcon());
@@ -119,7 +117,7 @@ public abstract class Animal extends Organism {
 
     protected abstract Animal spawnChild();
 
-    public void move(Location[][] grid) {
+    public void move(IslandMap islandMap) {
         if(isDead || maxSpeed == 0) {
             return;
         }
@@ -130,22 +128,38 @@ public abstract class Animal extends Organism {
             return;
         }
 
-        int newX = Math.clamp(myLocation.getX() + random.nextInt(-step, step + 1), 0, 99);
-        int newY = Math.clamp(myLocation.getY() + random.nextInt(-step, step + 1), 0, 19);
+        int newX = myLocation.getX() + random.nextInt(-step, step + 1);
+        int newY = myLocation.getY() + random.nextInt(-step, step + 1);
 
-        Location target = grid[newY][newX];
+        if(newX < 0) {
+            newX = 0;
+        }
+        if(newX >= islandMap.getWidth()) {
+            newX = islandMap.getWidth() -1;
+        }
+        if(newY < 0) {
+            newY = 0;
+        }
+        if(newY >= islandMap.getHeight()) {
+            newY = islandMap.getHeight() -1;
+        }
+
+        Location target = islandMap.getLocation(newX, newY);
+        if(target == null) {
+            return;
+        }
         int count = 0;
         List targetList = target.getOrganisms();
-
         for (Object o : targetList) {
             if (o.getClass().equals(this.getClass())) {
                 count++;
             }
         }
-        if(count <maxOnCell) {
+        if(count < maxOnCell) {
             myLocation.removeOrganism(this);
             this.setMyLocation(target);
             target.addOrganism(this);
+            System.out.println(this.getIcon() + " переместился в клетку [" + newX + ", " + newY + "]");
         }
 
 

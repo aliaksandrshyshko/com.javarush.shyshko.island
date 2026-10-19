@@ -1,37 +1,22 @@
 package main.java.com.javarush.shyshko.island;
 
-import main.java.com.javarush.shyshko.island.model.Location;
-import main.java.com.javarush.shyshko.island.model.Plant;
-import main.java.com.javarush.shyshko.island.model.Rabbit;
-import main.java.com.javarush.shyshko.island.model.Wolf;
+import main.java.com.javarush.shyshko.island.model.*;
 
 public class Application {
      static void main() {
 
-        Location testLocation = new Location(0, 0);
+        IslandMap islandMap = new IslandMap(10, 10);
+        Location startLocation = islandMap.getLocation(5, 5);
+
         Wolf wolf = new Wolf();
-        Rabbit rabbit = new Rabbit();
-        Plant plant = new Plant();
+        wolf.setMyLocation(startLocation);
+        startLocation.addOrganism(wolf);
 
-        wolf.setMyLocation(testLocation);
-        rabbit.setMyLocation(testLocation);
-        plant.setMyLocation(testLocation);
+        System.out.println("Начальная позиция волка: [" + wolf.getMyLocation().getX() + ", " + wolf.getMyLocation().getY() + "]");
 
-        testLocation.addOrganism(wolf);
-        testLocation.addOrganism(rabbit);
-        testLocation.addOrganism(plant);
+        wolf.move(islandMap);
 
-        System.out.println("Существ в клетке до симуляции: " + testLocation.getOrganisms().size());
-        System.out.println("--- Фаза питания ---");
-
-        rabbit.eat(testLocation);
-        wolf.eat(testLocation);
-
-        System.out.println("--- Окончание шага симуляции ---");
-        wolf.passStep();
-        rabbit.passStep();
-
-        System.out.println("\nИтог: Волк жив? " + !wolf.isDead() + ", Кролик жив? " + !rabbit.isDead());
+        System.out.println("Новая позиция волка: [" + wolf.getMyLocation().getX() + ", " + wolf.getMyLocation().getY() + "]");
 
     }
 }
