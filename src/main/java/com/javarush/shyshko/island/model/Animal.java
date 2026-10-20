@@ -157,6 +157,10 @@ public abstract class Animal extends Organism {
     }
 
     public void passStep() {
+        if (this.isDead()) {
+            return;
+        }
+
         this.currentSatiety -= (this.foodNeeded * 0.15);
         if(this.currentSatiety <= 0) {
             setDead(true);
@@ -165,5 +169,6 @@ public abstract class Animal extends Organism {
             String satietyStr = String.format("%.2f", this.currentSatiety);
             System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" +  " прожил этот шаг. Текущая сытость: " + satietyStr + "/" + this.foodNeeded);
         }
+        this.setHasMultipliedThisStep(false);
     }
 }
