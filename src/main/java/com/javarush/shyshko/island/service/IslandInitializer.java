@@ -10,7 +10,8 @@ import java.util.Random;
 
 public class IslandInitializer {
     private static final String[] ORGANISM_TYPES = {
-            "wolf", "rabbit", "plant", "bear", "fox", "eagle", "boa"
+            "wolf", "rabbit", "plant", "bear", "fox", "eagle", "boa", "boar", "buffalo", "caterpillar", "deer", "duck",
+            "goat", "horse", "mouse", "sheep"
     };
 
     public static void populateIsland(IslandMap islandMap) {

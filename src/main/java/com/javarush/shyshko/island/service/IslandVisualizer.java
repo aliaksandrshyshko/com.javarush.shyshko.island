@@ -3,7 +3,7 @@ package main.java.com.javarush.shyshko.island.service;
 import main.java.com.javarush.shyshko.island.model.*;
 import main.java.com.javarush.shyshko.island.model.organism.Plant;
 import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
-import main.java.com.javarush.shyshko.island.model.organism.herbivore.Rabbit;
+import main.java.com.javarush.shyshko.island.model.organism.herbivore.*;
 import main.java.com.javarush.shyshko.island.model.organism.predator.*;
 
 import java.util.ArrayList;
@@ -34,13 +34,22 @@ public class IslandVisualizer {
 
                 for (Organism o : loc.getOrganisms()) {
                     String line = switch (o) {
-                        case Wolf w when !w.isDead()        -> String.format("Волк      ID:%-5d", w.getId());
-                        case Rabbit r when !r.isDead()      -> String.format("Кролик    ID:%-5d", r.getId());
-                        case Bear b when !b.isDead()        -> String.format("Медведь    ID:%-5d", b.getId());
-                        case Fox f when !f.isDead()        -> String.format("Лиса    ID:%-5d", f.getId());
-                        case Eagle e when !e.isDead()        -> String.format("Орел    ID:%-5d", e.getId());
+                        case Wolf wolf when !wolf.isDead()        -> String.format("Волк      ID:%-5d", wolf.getId());
+                        case Rabbit rabbit when !rabbit.isDead()      -> String.format("Кролик    ID:%-5d", rabbit.getId());
+                        case Bear bear when !bear.isDead()        -> String.format("Медведь    ID:%-5d", bear.getId());
+                        case Fox fox when !fox.isDead()        -> String.format("Лиса    ID:%-5d", fox.getId());
+                        case Eagle eagle when !eagle.isDead()        -> String.format("Орел    ID:%-5d", eagle.getId());
                         case Boa boa when !boa.isDead()        -> String.format("Удав    ID:%-5d", boa.getId());
-                        case Plant p                        -> String.format("Растение  ID:%-5d", p.getId());
+                        case Boar boar when !boar.isDead()        -> String.format("Кабан    ID:%-5d", boar.getId());
+                        case Buffalo buffalo when !buffalo.isDead()  -> String.format("Буйвол    ID:%-5d", buffalo.getId());
+                        case Caterpillar caterpillar when !caterpillar.isDead()  -> String.format("Гусеница    ID:%-5d", caterpillar.getId());
+                        case Deer deer when !deer.isDead()  -> String.format("Олень    ID:%-5d", deer.getId());
+                        case Duck duck when !duck.isDead()  -> String.format("Утка    ID:%-5d", duck.getId());
+                        case Goat goat when !goat.isDead()  -> String.format("Коза    ID:%-5d", goat.getId());
+                        case Horse horse when !horse.isDead()  -> String.format("Лошадь    ID:%-5d", horse.getId());
+                        case Mouse mouse when !mouse.isDead()  -> String.format("Мышь    ID:%-5d", mouse.getId());
+                        case Sheep sheep when !sheep.isDead()  -> String.format("Овца    ID:%-5d", sheep.getId());
+                        case Plant plant                        -> String.format("Растение  ID:%-5d", plant.getId());
                         default -> null;
                     };
 
