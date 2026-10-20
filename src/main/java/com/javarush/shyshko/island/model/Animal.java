@@ -3,9 +3,11 @@ package main.java.com.javarush.shyshko.island.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.BiPredicate;
 
 import lombok.Getter;
 import lombok.Setter;
+import main.java.com.javarush.shyshko.island.config.SimulationConfig;
 import main.java.com.javarush.shyshko.island.factory.OrganismFactory;
 
 @Getter
@@ -21,12 +23,15 @@ public abstract class Animal extends Organism {
     protected boolean hasMultipliedThisStep = false;
     protected String icon;
 
+    protected BiPredicate<Animal, Organism> huntingStrategy;
+
 
     public Animal(double maxWeight,
                   int maxOnCell,
                   int maxSpeed,
                   double foodNeeded,
-                  String icon) {
+                  String icon,
+                  BiPredicate<Animal, Organism> huntingStrategy) {
         super(maxWeight);
         this.maxWeight = maxWeight;
         this.maxOnCell = maxOnCell;
@@ -34,29 +39,30 @@ public abstract class Animal extends Organism {
         this.foodNeeded = foodNeeded;
         this.currentSatiety = foodNeeded / 2;
         this.icon = icon;
+        this.huntingStrategy = huntingStrategy;
     }
 
     public void eat(Location loc) {
         if (isDead || currentSatiety >= foodNeeded ) {
             return;
         }
-        List targets = new ArrayList(loc.getOrganisms());
+        List<Organism> targets = new ArrayList(loc.getOrganisms());
         Random rand = new Random();
 
-        for (Object food : targets) {
-            if (this instanceof Wolf && food instanceof Rabbit rabbit) {
-                if (!rabbit.isDead() && rand.nextInt(100) < 60) {
-                    rabbit.setDead(true);
-                    loc.removeOrganism(rabbit);
-                    this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + rabbit.getWeight());
-                    System.out.println(this.getIcon() + " съел " + rabbit.getIcon());
+        for(int i=0; i<targets.size(); i++) {
+            Organism food = targets.get(i);
+            if(huntingStrategy.test(this, food)) {
+                int probability = SimulationConfig.getProbability(this.getClass(), food.getClass());
+                if(probability > 0 && rand.nextInt(100) < probability) {
+                    if(food instanceof Animal) {
+                        ((Animal) food).setDead(true);
+                    }
+                    loc.removeOrganism(food);
+                    this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + food.getWeight());
+                    System.out.println(this.getIcon() + " съел " + food.getIcon());
                     break;
                 }
-            } else if (this instanceof Rabbit && food instanceof Plant plant) {
-                loc.removeOrganism(plant);
-                this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + plant.getWeight());
-                System.out.println(this.getIcon() + " съел " + plant.getIcon());
-                break;
+
             }
         }
     }
