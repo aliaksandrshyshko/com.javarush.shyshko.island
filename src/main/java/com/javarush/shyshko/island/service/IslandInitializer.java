@@ -23,7 +23,7 @@ public class IslandInitializer {
 
                 for (String type : ORGANISM_TYPES) {
 
-                    Organism firstOrganism = OrganismFactory.createOrganism(type, true);
+                    Organism firstOrganism = OrganismFactory.createOrganism(type, false);
 
                     int maxOnCell = 0;
                     if (firstOrganism instanceof Animal animal) {

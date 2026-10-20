@@ -27,7 +27,7 @@ public class OrganismFactory {
             default -> throw new IllegalArgumentException("Неизвестный организм: " + type);
         };
         if (!isGameCycle) {
-            System.out.println("Фабрика создала: " + organism.getIcon() + " [ID: " + organism.getId() + "]");
+            System.out.println("Фабрика создала: " + organism.getIcon() + organism.getName() + " [ID: " + organism.getId() + "]");
         }
         return organism;
     }
