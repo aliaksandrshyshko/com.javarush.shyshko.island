@@ -1,6 +1,5 @@
 package main.java.com.javarush.shyshko.island.model.organism.herbivore;
 
-import main.java.com.javarush.shyshko.island.model.organism.Plant;
 import main.java.com.javarush.shyshko.island.model.organism.abstraction.Herbivore;
 
 public class Rabbit extends Herbivore {

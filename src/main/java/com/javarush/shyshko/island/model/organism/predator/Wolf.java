@@ -1,6 +1,5 @@
 package main.java.com.javarush.shyshko.island.model.organism.predator;
 
-import main.java.com.javarush.shyshko.island.config.SimulationConfig;
 import main.java.com.javarush.shyshko.island.model.organism.abstraction.Predator;
 
 public class Wolf extends Predator {

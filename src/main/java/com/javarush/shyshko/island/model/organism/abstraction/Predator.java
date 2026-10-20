@@ -2,8 +2,6 @@ package main.java.com.javarush.shyshko.island.model.organism.abstraction;
 
 import main.java.com.javarush.shyshko.island.config.SimulationConfig;
 
-import java.util.function.BiPredicate;
-
 public abstract class Predator extends Animal {
     public Predator(String name, double maxWeight, int maxOnCell, int maxSpeed, double foodNeeded) {
         super(name, maxWeight, maxOnCell, maxSpeed, foodNeeded,
