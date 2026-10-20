@@ -13,16 +13,26 @@ public class Application {
          IslandMap map = new IslandMap(10, 10);
 
          Location cellA = map.getLocation(0, 0);
-         cellA.addOrganism(OrganismFactory.createOrganism("wolf"));
-         cellA.addOrganism(OrganismFactory.createOrganism("rabbit"));
-         cellA.addOrganism(OrganismFactory.createOrganism("plant"));
+         cellA.addOrganism(OrganismFactory.createOrganism("wolf", false));
+         cellA.addOrganism(OrganismFactory.createOrganism("rabbit", false));
+         cellA.addOrganism(OrganismFactory.createOrganism("plant", false));
+         cellA.addOrganism(OrganismFactory.createOrganism("plant", false));
+         cellA.addOrganism(OrganismFactory.createOrganism("plant", false));
+         cellA.addOrganism(OrganismFactory.createOrganism("plant", false));
+         cellA.addOrganism(OrganismFactory.createOrganism("plant", false));
+         cellA.addOrganism(OrganismFactory.createOrganism("plant", false));
+         cellA.addOrganism(OrganismFactory.createOrganism("plant", false));
+
 
          Location cellB = map.getLocation(1, 1);
-         cellB.addOrganism(OrganismFactory.createOrganism("rabbit"));
-         cellB.addOrganism(OrganismFactory.createOrganism("rabbit"));
+         cellB.addOrganism(OrganismFactory.createOrganism("rabbit", false));
+         cellB.addOrganism(OrganismFactory.createOrganism("rabbit", false));
+         cellB.addOrganism(OrganismFactory.createOrganism("wolf", false));
+         cellB.addOrganism(OrganismFactory.createOrganism("wolf", false));
+         cellB.addOrganism(OrganismFactory.createOrganism("wolf", false));
 
          IslandEngine engine = new IslandEngine(map);
 
-         engine.runStepCycle();
+         engine.startSimulation();
     }
 }

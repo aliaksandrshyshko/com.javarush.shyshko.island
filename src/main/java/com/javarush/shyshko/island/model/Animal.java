@@ -51,15 +51,21 @@ public abstract class Animal extends Organism {
 
         for (Organism food : targets) {
             if (huntingStrategy.test(this, food)) {
-                int probability = SimulationConfig.getProbability(this.getClass(), food.getClass());
-                if (probability > 0 && rand.nextInt(100) < probability) {
-                    if (food instanceof Animal) {
-                        ((Animal) food).setDead(true);
+
+                long currentVersion = food.getVersionSnapshot();
+
+                if(food.tryLockUpdate(currentVersion)) {
+                    int probability = SimulationConfig.getProbability(this.getClass(), food.getClass());
+                    if (probability > 0 && rand.nextInt(100) < probability) {
+                        if (food instanceof Animal) {
+                            ((Animal) food).setDead(true);
+                        }
+                        loc.removeOrganism(food);
+                        this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + food.getWeight());
+                        System.out.println(this.getIcon() + " [ID: " + this.getId() + "] съел "
+                                + food.getIcon() + " [ID: " + food.getId() + "]");
+                        break;
                     }
-                    loc.removeOrganism(food);
-                    this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + food.getWeight());
-                    System.out.println(this.getIcon() + " съел " + food.getIcon());
-                    break;
                 }
 
             }
@@ -95,12 +101,13 @@ public abstract class Animal extends Organism {
 
         if(partner != null) {
             String typeName = this.getClass().getSimpleName();
-            Animal baby = (Animal) OrganismFactory.createOrganism(typeName);
+            Animal baby = (Animal) OrganismFactory.createOrganism(typeName, true);
             baby.setMyLocation(loc);
             loc.addOrganism(baby);
             this.setHasMultipliedThisStep(true);
             partner.setHasMultipliedThisStep(true);
-            System.out.println("Фабрика создала " + baby.getIcon());
+            System.out.println("Родился " + baby.getIcon() + " [ID: " + baby.getId()
+                    + "] от пары родителей [ID: " + this.getId() + " и " + partner.getId() + "]");
         }
     }
 
@@ -145,7 +152,7 @@ public abstract class Animal extends Organism {
         if(count < maxOnCell) {
             myLocation.removeOrganism(this);
             target.addOrganism(this);
-            System.out.println(this.getIcon() + " переместился в клетку [" + newX + ", " + newY + "]");
+            System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" + " переместился в клетку [" + newX + ", " + newY + "]");
         }
 
 
@@ -155,10 +162,10 @@ public abstract class Animal extends Organism {
         this.currentSatiety -= (this.foodNeeded * 0.15);
         if(this.currentSatiety <= 0) {
             setDead(true);
-            System.out.println(this.getIcon() + " умер от голода");
+            System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" +  " умер от голода");
         } else {
             String satietyStr = String.format("%.2f", this.currentSatiety);
-            System.out.println(this.getIcon() + " прожил этот шаг. Текущая сытость: " + satietyStr + "/" + this.foodNeeded);
+            System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" +  " прожил этот шаг. Текущая сытость: " + satietyStr + "/" + this.foodNeeded);
         }
     }
 }
