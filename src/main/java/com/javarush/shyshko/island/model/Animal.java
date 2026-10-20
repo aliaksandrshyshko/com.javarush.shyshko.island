@@ -49,12 +49,11 @@ public abstract class Animal extends Organism {
         List<Organism> targets = new ArrayList(loc.getOrganisms());
         Random rand = new Random();
 
-        for(int i=0; i<targets.size(); i++) {
-            Organism food = targets.get(i);
-            if(huntingStrategy.test(this, food)) {
+        for (Organism food : targets) {
+            if (huntingStrategy.test(this, food)) {
                 int probability = SimulationConfig.getProbability(this.getClass(), food.getClass());
-                if(probability > 0 && rand.nextInt(100) < probability) {
-                    if(food instanceof Animal) {
+                if (probability > 0 && rand.nextInt(100) < probability) {
+                    if (food instanceof Animal) {
                         ((Animal) food).setDead(true);
                     }
                     loc.removeOrganism(food);
@@ -72,7 +71,7 @@ public abstract class Animal extends Organism {
             return;
         }
 
-        List list = loc.getOrganisms();
+        List<Organism> list = loc.getOrganisms();
         int count =0;
         for (Object object : list) {
             if (object.getClass().equals(this.getClass())) {
@@ -97,13 +96,11 @@ public abstract class Animal extends Organism {
         if(partner != null) {
             String typeName = this.getClass().getSimpleName();
             Animal baby = (Animal) OrganismFactory.createOrganism(typeName);
-            if(baby != null) {
-                baby.setMyLocation(loc);
-                loc.addOrganism(baby);
-                this.setHasMultipliedThisStep(true);
-                partner.setHasMultipliedThisStep(true);
-                System.out.println("Фабрика создала " + baby.getIcon());
-            }
+            baby.setMyLocation(loc);
+            loc.addOrganism(baby);
+            this.setHasMultipliedThisStep(true);
+            partner.setHasMultipliedThisStep(true);
+            System.out.println("Фабрика создала " + baby.getIcon());
         }
     }
 
@@ -139,7 +136,7 @@ public abstract class Animal extends Organism {
             return;
         }
         int count = 0;
-        List targetList = target.getOrganisms();
+        List<Organism> targetList = target.getOrganisms();
         for (Object o : targetList) {
             if (o.getClass().equals(this.getClass())) {
                 count++;
