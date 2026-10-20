@@ -1,9 +1,13 @@
 package main.java.com.javarush.shyshko.island.model.organism.abstraction;
 
+import main.java.com.javarush.shyshko.island.config.SimulationConfig;
+
 import java.util.function.BiPredicate;
 
 public abstract class Predator extends Animal {
-    public Predator(double maxWeight, int maxOnCell, int maxSpeed, double foodNeeded, String icon, BiPredicate<Animal, Organism> huntingStrategy) {
-        super(maxWeight, maxOnCell, maxSpeed, foodNeeded, icon, huntingStrategy);
+    public Predator(String name, double maxWeight, int maxOnCell, int maxSpeed, double foodNeeded) {
+        super(name, maxWeight, maxOnCell, maxSpeed, foodNeeded,
+                (attacker, food) -> SimulationConfig.getProbability(attacker.getClass(), food.getClass()) > 0
+        );
     }
 }

@@ -15,12 +15,15 @@ public abstract class Organism {
     private static final AtomicInteger idGenerator = new AtomicInteger(1);
     private final int id;
     protected double weight;
+    protected String name;
     protected Location myLocation;
+
     protected final int maxOnCell;
     private final AtomicLong version = new AtomicLong(0);
 
-    public Organism(double weight, int maxOnCell) {
+    public Organism(String name, double weight, int maxOnCell) {
         this.id = idGenerator.getAndIncrement();
+        this.name = name;
         this.weight = weight;
         this.maxOnCell = maxOnCell;
     }

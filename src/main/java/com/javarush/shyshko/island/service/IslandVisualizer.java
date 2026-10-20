@@ -4,7 +4,7 @@ import main.java.com.javarush.shyshko.island.model.*;
 import main.java.com.javarush.shyshko.island.model.organism.Plant;
 import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
 import main.java.com.javarush.shyshko.island.model.organism.herbivore.Rabbit;
-import main.java.com.javarush.shyshko.island.model.organism.predator.Wolf;
+import main.java.com.javarush.shyshko.island.model.organism.predator.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,10 @@ public class IslandVisualizer {
                     String line = switch (o) {
                         case Wolf w when !w.isDead()        -> String.format("Волк      ID:%-5d", w.getId());
                         case Rabbit r when !r.isDead()      -> String.format("Кролик    ID:%-5d", r.getId());
+                        case Bear b when !b.isDead()        -> String.format("Медведь    ID:%-5d", b.getId());
+                        case Fox f when !f.isDead()        -> String.format("Лиса    ID:%-5d", f.getId());
+                        case Eagle e when !e.isDead()        -> String.format("Орел    ID:%-5d", e.getId());
+                        case Boa boa when !boa.isDead()        -> String.format("Удав    ID:%-5d", boa.getId());
                         case Plant p                        -> String.format("Растение  ID:%-5d", p.getId());
                         default -> null;
                     };

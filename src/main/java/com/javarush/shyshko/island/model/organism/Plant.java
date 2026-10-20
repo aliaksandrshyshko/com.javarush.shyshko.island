@@ -4,7 +4,7 @@ import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism
 
 public class Plant extends Organism {
     public Plant() {
-        super(1, 3);
+        super("Сорняк", 1, 1);
     }
 
 

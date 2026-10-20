@@ -15,32 +15,25 @@ import main.java.com.javarush.shyshko.island.model.Location;
 @Setter
 public abstract class Animal extends Organism {
 
-    protected double maxWeight;
-    protected int maxOnCell;
-    protected int maxSpeed;
-    protected double foodNeeded;
     protected double currentSatiety;
     protected boolean isDead = false;
     protected boolean hasMultipliedThisStep = false;
-    protected String icon;
-
+    protected int maxSpeed;
+    protected double foodNeeded;
     protected BiPredicate<Animal, Organism> huntingStrategy;
 
 
-    public Animal(double maxWeight,
+    public Animal(String name,
+                  double weight,
                   int maxOnCell,
                   int maxSpeed,
                   double foodNeeded,
-                  String icon,
                   BiPredicate<Animal, Organism> huntingStrategy) {
-        super(maxWeight, maxOnCell);
-        this.maxWeight = maxWeight;
-        this.maxOnCell = maxOnCell;
-        this.maxSpeed = maxSpeed;
+        super(name, weight, maxOnCell);
         this.foodNeeded = foodNeeded;
         this.currentSatiety = foodNeeded / 2;
-        this.icon = icon;
         this.huntingStrategy = huntingStrategy;
+        this.maxSpeed = maxSpeed;
     }
 
     public void eat(Location loc) {
@@ -50,6 +43,7 @@ public abstract class Animal extends Organism {
         Random rand = new Random();
 
         for (Organism food : loc.getOrganismsOfType(Organism.class)) {
+
             if (huntingStrategy.test(this, food)) {
 
                 long currentVersion = food.getVersionSnapshot();
@@ -57,13 +51,13 @@ public abstract class Animal extends Organism {
                 if(food.tryLockUpdate(currentVersion)) {
                     int probability = SimulationConfig.getProbability(this.getClass(), food.getClass());
                     if (probability > 0 && rand.nextInt(100) < probability) {
-                        if (food instanceof Animal) {
-                            ((Animal) food).setDead(true);
+                        if (food instanceof Animal animal) {
+                            animal.setDead(true);
                         }
                         loc.removeOrganism(food);
                         this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + food.getWeight());
-                        System.out.println(this.getIcon() + " [ID: " + this.getId() + "] съел "
-                                + food.getIcon() + " [ID: " + food.getId() + "]");
+                        System.out.println(this.getIcon() + this.getName() +  " [ID: " + this.getId() + "] съел "
+                                + food.getIcon() + food.getName()+ " [ID: " + food.getId() + "]");
                         break;
                     }
                 }
@@ -106,7 +100,7 @@ public abstract class Animal extends Organism {
             loc.addOrganism(baby);
             this.setHasMultipliedThisStep(true);
             partner.setHasMultipliedThisStep(true);
-            System.out.println("Родился " + baby.getIcon() + " [ID: " + baby.getId()
+            System.out.println("Родился " + baby.getIcon() + baby.getName() + " [ID: " + baby.getId()
                     + "] от пары родителей [ID: " + this.getId() + " и " + partner.getId() + "]");
         }
     }
@@ -152,7 +146,7 @@ public abstract class Animal extends Organism {
         if(count < maxOnCell) {
             myLocation.removeOrganism(this);
             target.addOrganism(this);
-            System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" + " переместился в клетку [" + newX + ", " + newY + "]");
+            System.out.println(this.getIcon() + this.getName() + " [ID: " + this.getId() + "]" + " переместился в клетку [" + newX + ", " + newY + "]");
         }
 
 
@@ -166,10 +160,10 @@ public abstract class Animal extends Organism {
         this.currentSatiety -= (this.foodNeeded * 0.15);
         if(this.currentSatiety <= 0) {
             setDead(true);
-            System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" +  " умер от голода");
+            System.out.println(this.getIcon() + this.getName() +  " [ID: " + this.getId() + "]" +  " умер от голода");
         } else {
             String satietyStr = String.format("%.2f", this.currentSatiety);
-            System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" +  " прожил этот такт. Текущая сытость: " + satietyStr + "/" + this.foodNeeded);
+            System.out.println(this.getIcon() + this.getName() + " [ID: " + this.getId() + "]" +  " прожил этот такт. Текущая сытость: " + satietyStr + "/" + this.foodNeeded);
         }
         this.setHasMultipliedThisStep(false);
     }
