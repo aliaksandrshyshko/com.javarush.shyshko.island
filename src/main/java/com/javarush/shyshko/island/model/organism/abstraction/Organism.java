@@ -1,7 +1,8 @@
-package main.java.com.javarush.shyshko.island.model;
+package main.java.com.javarush.shyshko.island.model.organism.abstraction;
 
 import lombok.Getter;
 import lombok.Setter;
+import main.java.com.javarush.shyshko.island.model.Location;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;

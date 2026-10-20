@@ -1,9 +1,9 @@
 package main.java.com.javarush.shyshko.island.factory;
 
-import main.java.com.javarush.shyshko.island.model.Organism;
-import main.java.com.javarush.shyshko.island.model.Plant;
-import main.java.com.javarush.shyshko.island.model.Rabbit;
-import main.java.com.javarush.shyshko.island.model.Wolf;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
+import main.java.com.javarush.shyshko.island.model.organism.Plant;
+import main.java.com.javarush.shyshko.island.model.organism.herbivore.Rabbit;
+import main.java.com.javarush.shyshko.island.model.organism.predator.Wolf;
 
 public class OrganismFactory {
     public static Organism createOrganism(String type,  boolean isGameCycle) {

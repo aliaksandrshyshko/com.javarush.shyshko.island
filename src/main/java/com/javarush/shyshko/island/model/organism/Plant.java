@@ -1,4 +1,6 @@
-package main.java.com.javarush.shyshko.island.model;
+package main.java.com.javarush.shyshko.island.model.organism;
+
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
 
 public class Plant extends Organism {
     public Plant() {

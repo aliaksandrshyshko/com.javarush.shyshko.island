@@ -1,6 +1,10 @@
 package main.java.com.javarush.shyshko.island.service;
 
 import main.java.com.javarush.shyshko.island.model.*;
+import main.java.com.javarush.shyshko.island.model.organism.Plant;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
+import main.java.com.javarush.shyshko.island.model.organism.herbivore.Rabbit;
+import main.java.com.javarush.shyshko.island.model.organism.predator.Wolf;
 
 import java.util.ArrayList;
 import java.util.List;

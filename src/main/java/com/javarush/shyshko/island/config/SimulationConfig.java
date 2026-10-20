@@ -2,7 +2,11 @@ package main.java.com.javarush.shyshko.island.config;
 
 import lombok.Builder;
 import lombok.Getter;
-import main.java.com.javarush.shyshko.island.model.*;
+import main.java.com.javarush.shyshko.island.model.organism.Plant;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Animal;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
+import main.java.com.javarush.shyshko.island.model.organism.herbivore.Rabbit;
+import main.java.com.javarush.shyshko.island.model.organism.predator.Wolf;
 
 import java.util.HashMap;
 import java.util.Map;

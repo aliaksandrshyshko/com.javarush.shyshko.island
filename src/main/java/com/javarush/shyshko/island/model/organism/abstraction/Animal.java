@@ -1,4 +1,4 @@
-package main.java.com.javarush.shyshko.island.model;
+package main.java.com.javarush.shyshko.island.model.organism.abstraction;
 
 import java.util.List;
 import java.util.Random;
@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import main.java.com.javarush.shyshko.island.config.SimulationConfig;
 import main.java.com.javarush.shyshko.island.factory.OrganismFactory;
+import main.java.com.javarush.shyshko.island.model.IslandMap;
+import main.java.com.javarush.shyshko.island.model.Location;
 
 @Getter
 @Setter

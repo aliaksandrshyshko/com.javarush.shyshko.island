@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import lombok.Getter;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
 
 @Getter
 public class Location {

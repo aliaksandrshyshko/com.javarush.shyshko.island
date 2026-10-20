@@ -2,6 +2,9 @@ package main.java.com.javarush.shyshko.island.service;
 
 import main.java.com.javarush.shyshko.island.factory.OrganismFactory;
 import main.java.com.javarush.shyshko.island.model.*;
+import main.java.com.javarush.shyshko.island.model.organism.Plant;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Animal;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
 
 import java.util.Random;
 

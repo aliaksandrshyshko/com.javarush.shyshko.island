@@ -1,9 +1,9 @@
 package main.java.com.javarush.shyshko.island.service;
 
-import main.java.com.javarush.shyshko.island.model.Animal;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Animal;
 import main.java.com.javarush.shyshko.island.model.IslandMap;
 import main.java.com.javarush.shyshko.island.model.Location;
-import main.java.com.javarush.shyshko.island.model.Organism;
+import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
 
 import java.util.ArrayList;
 import java.util.List;
