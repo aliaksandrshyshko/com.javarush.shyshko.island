@@ -6,7 +6,6 @@ import main.java.com.javarush.shyshko.island.model.Location;
 import main.java.com.javarush.shyshko.island.model.Organism;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

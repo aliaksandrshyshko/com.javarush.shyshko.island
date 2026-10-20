@@ -1,11 +1,9 @@
 package main.java.com.javarush.shyshko.island;
 
-import main.java.com.javarush.shyshko.island.config.SimulationConfig;
 import main.java.com.javarush.shyshko.island.factory.OrganismFactory;
 import main.java.com.javarush.shyshko.island.model.*;
 import main.java.com.javarush.shyshko.island.service.IslandEngine;
 
-import java.util.List;
 
 public class Application {
      static void main() {

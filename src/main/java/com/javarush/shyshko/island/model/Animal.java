@@ -46,10 +46,9 @@ public abstract class Animal extends Organism {
         if (isDead || currentSatiety >= foodNeeded ) {
             return;
         }
-        List<Organism> targets = new ArrayList(loc.getOrganisms());
         Random rand = new Random();
 
-        for (Organism food : targets) {
+        for (Organism food : loc.getOrganismsOfType(Organism.class)) {
             if (huntingStrategy.test(this, food)) {
 
                 long currentVersion = food.getVersionSnapshot();
