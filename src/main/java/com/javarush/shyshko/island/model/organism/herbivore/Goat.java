@@ -5,7 +5,7 @@ import main.java.com.javarush.shyshko.island.model.organism.abstraction.Herbivor
 public class Goat extends Herbivore {
 
     public Goat() {
-        super("Утка",60, 5, 3, 10);
+        super("Коза",60, 5, 3, 10);
     }
 
     @Override

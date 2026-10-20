@@ -53,6 +53,7 @@ public abstract class Animal extends Organism {
                     if (probability > 0 && rand.nextInt(100) < probability) {
                         if (food instanceof Animal animal) {
                             animal.setDead(true);
+                            return;
                         }
                         loc.removeOrganism(food);
                         this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + food.getWeight());
