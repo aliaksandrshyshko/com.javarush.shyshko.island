@@ -16,16 +16,17 @@ public class IslandEngine {
     private final IslandMap islandMap;
 
     private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(4);
+    private int dayCount = 0;
 
     public IslandEngine(IslandMap islandMap) {
         this.islandMap = islandMap;
     }
 
     public void startSimulation() {
-        executor.scheduleAtFixedRate(this::runParallelStep,0,2, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(this::runParallelTact,0,2, TimeUnit.SECONDS);
     }
 
-    public void runParallelStep() {
+    public void runParallelTact() {
         List<Future<?>> futures = new ArrayList<>();
 
         for(int y = 0; y<islandMap.getHeight(); y++) {
@@ -43,7 +44,7 @@ public class IslandEngine {
                                 animal.eat(loc);
                                 animal.multiply(loc);
                                 animal.move(islandMap);
-                                animal.passStep();
+                                animal.passTact();
                             }
                         }
                     }
@@ -61,6 +62,7 @@ public class IslandEngine {
             }
         }
 
+        dayCount++;
 
         boolean standardAnimalAlive = false;
         for (int y = 0; y < islandMap.getHeight(); y++) {
@@ -78,7 +80,7 @@ public class IslandEngine {
         }
 
 
-        IslandVisualizer.drawGrid(islandMap);
+        IslandVisualizer.drawGrid(islandMap, dayCount);
 
 
         if (!standardAnimalAlive) {

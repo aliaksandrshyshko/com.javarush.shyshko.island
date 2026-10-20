@@ -31,7 +31,7 @@ public abstract class Animal extends Organism {
                   double foodNeeded,
                   String icon,
                   BiPredicate<Animal, Organism> huntingStrategy) {
-        super(maxWeight);
+        super(maxWeight, maxOnCell);
         this.maxWeight = maxWeight;
         this.maxOnCell = maxOnCell;
         this.maxSpeed = maxSpeed;
@@ -156,7 +156,7 @@ public abstract class Animal extends Organism {
 
     }
 
-    public void passStep() {
+    public void passTact() {
         if (this.isDead()) {
             return;
         }
@@ -167,7 +167,7 @@ public abstract class Animal extends Organism {
             System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" +  " умер от голода");
         } else {
             String satietyStr = String.format("%.2f", this.currentSatiety);
-            System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" +  " прожил этот шаг. Текущая сытость: " + satietyStr + "/" + this.foodNeeded);
+            System.out.println(this.getIcon() + " [ID: " + this.getId() + "]" +  " прожил этот такт. Текущая сытость: " + satietyStr + "/" + this.foodNeeded);
         }
         this.setHasMultipliedThisStep(false);
     }

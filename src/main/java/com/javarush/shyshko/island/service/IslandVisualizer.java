@@ -9,12 +9,12 @@ public class IslandVisualizer {
 
     private static final int CELL_WIDTH = 22;
 
-    public static void drawGrid(IslandMap islandMap) {
+    public static void drawGrid(IslandMap islandMap, int day) {
 
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
-        System.out.println("КАРТА ОСТРОВА:");
+        System.out.println("КАРТА ОСТРОВА ( ТАКТ " + day +" ):");
 
         for (int y = 0; y < islandMap.getHeight(); y++) {
 

@@ -2,7 +2,7 @@ package main.java.com.javarush.shyshko.island.model;
 
 public class Plant extends Organism {
     public Plant() {
-        super(1);
+        super(1, 3);
     }
 
 
