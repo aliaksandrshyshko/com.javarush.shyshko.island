@@ -1,11 +1,12 @@
 package main.java.com.javarush.shyshko.island.model.organism.predator;
 
+import main.java.com.javarush.shyshko.island.factory.OrganismType;
 import main.java.com.javarush.shyshko.island.model.organism.abstraction.Predator;
 
 public class Eagle extends Predator {
 
     public Eagle() {
-        super("Орел",6, 5, 3, 1.0);
+        super(OrganismType.EAGLE,"Орел",6,  3, 1.0);
     }
 
     @Override

@@ -1,11 +1,12 @@
 package main.java.com.javarush.shyshko.island.model.organism.herbivore;
 
+import main.java.com.javarush.shyshko.island.factory.OrganismType;
 import main.java.com.javarush.shyshko.island.model.organism.abstraction.Herbivore;
 
 public class Sheep extends Herbivore {
 
     public Sheep() {
-        super("Овца",70, 2, 3, 15);
+        super(OrganismType.SHEEP, "Овца",70,  3, 15);
     }
 
     @Override

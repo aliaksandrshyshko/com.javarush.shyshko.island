@@ -7,15 +7,9 @@ import main.java.com.javarush.shyshko.island.service.IslandVisualizer;
 
 
 public class Application {
-     static void main() {
-
-
-         IslandMap map = new IslandMap(3, 3);
-
+   public static void main(String[] args) {
+         Island map = new Island(3, 3);
          IslandInitializer.populateIsland(map);
-
-         IslandVisualizer.drawGrid(map, 0);
-
          IslandEngine engine = new IslandEngine(map);
          engine.startSimulation();
     }

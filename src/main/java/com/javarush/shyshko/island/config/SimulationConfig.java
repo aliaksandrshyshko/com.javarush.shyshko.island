@@ -1,140 +1,110 @@
 package main.java.com.javarush.shyshko.island.config;
 
-import lombok.Builder;
-import lombok.Getter;
-import main.java.com.javarush.shyshko.island.model.organism.Plant;
-import main.java.com.javarush.shyshko.island.model.organism.abstraction.Animal;
-import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
-import main.java.com.javarush.shyshko.island.model.organism.herbivore.*;
-import main.java.com.javarush.shyshko.island.model.organism.predator.*;
+import main.java.com.javarush.shyshko.island.factory.OrganismType;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
-@Getter
-@Builder
-public class SimulationConfig {
-    private final int mapWidth;
-    private final int mapHeight;
+public final class SimulationConfig {
 
-    private static final Map<Class<? extends Animal>, Map<Class<? extends Organism>, Integer>> targetMatrix = new HashMap<>();
+    private static final Map<OrganismType, Map<OrganismType, Integer>> targetMatrix = new EnumMap<>(OrganismType.class);
 
     static {
+        // Вероятности для волка
+        Map<OrganismType, Integer> wolfRules = new EnumMap<>(OrganismType.class);
+        wolfRules.put(OrganismType.HORSE, 10);
+        wolfRules.put(OrganismType.DEER, 15);
+        wolfRules.put(OrganismType.RABBIT, 60);
+        wolfRules.put(OrganismType.MOUSE, 80);
+        wolfRules.put(OrganismType.GOAT, 60);
+        wolfRules.put(OrganismType.SHEEP, 70);
+        wolfRules.put(OrganismType.BOAR, 80);
+        wolfRules.put(OrganismType.BUFFALO, 10);
+        wolfRules.put(OrganismType.DUCK, 40);
+        targetMatrix.put(OrganismType.WOLF, wolfRules);
 
-        //Вероятности для волка
-        Map<Class<? extends Organism>, Integer> wolfRules = new HashMap<>();
-        wolfRules.put(Horse.class, 10);
-        wolfRules.put(Deer.class, 15);
-        wolfRules.put(Rabbit.class, 60);
-        wolfRules.put(Mouse.class, 80);
-        wolfRules.put(Goat.class, 60);
-        wolfRules.put(Sheep.class, 70);
-        wolfRules.put(Boar.class, 80);
-        wolfRules.put(Buffalo.class, 10);
-        wolfRules.put(Duck.class, 40);
-        targetMatrix.put(Wolf.class, wolfRules);
+        // Вероятности для удава
+        Map<OrganismType, Integer> boaRules = new EnumMap<>(OrganismType.class);
+        boaRules.put(OrganismType.FOX, 15);
+        boaRules.put(OrganismType.RABBIT, 20);
+        boaRules.put(OrganismType.MOUSE, 40);
+        boaRules.put(OrganismType.DUCK, 10);
+        targetMatrix.put(OrganismType.BOA, boaRules);
 
-        //Вероятности для удава
-        Map<Class<? extends Organism>, Integer> boaRules = new HashMap<>();
-        boaRules.put(Fox.class, 15);
-        boaRules.put(Rabbit.class, 20);
-        boaRules.put(Mouse.class, 40);
-        boaRules.put(Duck.class, 10);
-        targetMatrix.put(Boa.class, boaRules);
+        // Вероятности для лисы
+        Map<OrganismType, Integer> foxRules = new EnumMap<>(OrganismType.class);
+        foxRules.put(OrganismType.RABBIT, 70);
+        foxRules.put(OrganismType.MOUSE, 90);
+        foxRules.put(OrganismType.DUCK, 60);
+        foxRules.put(OrganismType.CATERPILLAR, 40);
+        targetMatrix.put(OrganismType.FOX, foxRules);
 
-        //Вероятности для лисы
-        Map<Class<? extends Organism>, Integer> foxRules = new HashMap<>();
-        foxRules.put(Rabbit.class, 70);
-        foxRules.put(Mouse.class, 90);
-        foxRules.put(Duck.class, 60);
-        foxRules.put(Caterpillar.class, 40);
-        targetMatrix.put(Fox.class, foxRules);
+        // Вероятности для медведя
+        Map<OrganismType, Integer> bearRules = new EnumMap<>(OrganismType.class);
+        bearRules.put(OrganismType.BOA, 80);
+        bearRules.put(OrganismType.HORSE, 40);
+        bearRules.put(OrganismType.DEER, 80);
+        bearRules.put(OrganismType.RABBIT, 80);
+        bearRules.put(OrganismType.MOUSE, 90);
+        bearRules.put(OrganismType.GOAT, 70);
+        bearRules.put(OrganismType.SHEEP, 70);
+        bearRules.put(OrganismType.BOAR, 50);
+        bearRules.put(OrganismType.BUFFALO, 20);
+        bearRules.put(OrganismType.DUCK, 10);
+        targetMatrix.put(OrganismType.BEAR, bearRules);
 
-        //Вероятности для медведя
-        Map<Class<? extends Organism>, Integer> bearRules = new HashMap<>();
-        bearRules.put(Boa.class, 80);
-        bearRules.put(Horse.class, 40);
-        bearRules.put(Deer.class, 80);
-        bearRules.put(Rabbit.class, 80);
-        bearRules.put(Mouse.class, 90);
-        bearRules.put(Goat.class, 70);
-        bearRules.put(Sheep.class, 70);
-        bearRules.put(Boar.class, 50);
-        bearRules.put(Buffalo.class, 20);
-        bearRules.put(Duck.class, 10);
-        targetMatrix.put(Bear.class, bearRules);
+        // Вероятности для орла
+        Map<OrganismType, Integer> eagleRules = new EnumMap<>(OrganismType.class);
+        eagleRules.put(OrganismType.FOX, 10);
+        eagleRules.put(OrganismType.RABBIT, 90);
+        eagleRules.put(OrganismType.MOUSE, 90);
+        eagleRules.put(OrganismType.DUCK, 80);
+        targetMatrix.put(OrganismType.EAGLE, eagleRules);
 
-        //Вероятности для орла
-        Map<Class<? extends Organism>, Integer> eagleRules = new HashMap<>();
-        eagleRules.put(Fox.class, 10);
-        eagleRules.put(Rabbit.class, 90);
-        eagleRules.put(Mouse.class, 90);
-        eagleRules.put(Duck.class, 80);
-        targetMatrix.put(Eagle.class, eagleRules);
+        // Вероятности для травоядных (едят растения)
+        configureHerbivore(OrganismType.HORSE);
+        configureHerbivore(OrganismType.DEER);
+        configureHerbivore(OrganismType.RABBIT);
+        configureHerbivore(OrganismType.GOAT);
+        configureHerbivore(OrganismType.SHEEP);
+        configureHerbivore(OrganismType.BUFFALO);
 
-        //Вероятности для лошади
-        Map<Class<? extends Organism>, Integer> horseRules = new HashMap<>();
-        horseRules.put(Plant.class, 100);
-        targetMatrix.put(Horse.class, horseRules);
+        // Вероятности для мыши
+        Map<OrganismType, Integer> mouseRules = new EnumMap<>(OrganismType.class);
+        mouseRules.put(OrganismType.PLANT, 100);
+        mouseRules.put(OrganismType.CATERPILLAR, 90);
+        targetMatrix.put(OrganismType.MOUSE, mouseRules);
 
-        //Вероятности для оленя
-        Map<Class<? extends Organism>, Integer> deerRules = new HashMap<>();
-        deerRules.put(Plant.class, 100);
-        targetMatrix.put(Deer.class, deerRules);
+        // Вероятности для кабана
+        Map<OrganismType, Integer> boarRules = new EnumMap<>(OrganismType.class);
+        boarRules.put(OrganismType.PLANT, 100);
+        boarRules.put(OrganismType.CATERPILLAR, 90);
+        boarRules.put(OrganismType.MOUSE, 50);
+        targetMatrix.put(OrganismType.BOAR, boarRules);
 
-        //Вероятности для кролика
-        Map<Class<? extends Organism>, Integer> rabbitRules = new HashMap<>();
-        rabbitRules.put(Plant.class, 100);
-        targetMatrix.put(Rabbit.class, rabbitRules);
+        // Вероятности для утки
+        Map<OrganismType, Integer> duckRules = new EnumMap<>(OrganismType.class);
+        duckRules.put(OrganismType.PLANT, 100);
+        duckRules.put(OrganismType.CATERPILLAR, 90);
+        targetMatrix.put(OrganismType.DUCK, duckRules);
 
-        //Вероятности для мыши
-        Map<Class<? extends Organism>, Integer> mouseRules = new HashMap<>();
-        mouseRules.put(Plant.class, 100);
-        mouseRules.put(Caterpillar.class, 90);
-        targetMatrix.put(Mouse.class, mouseRules);
-
-        //Вероятности для козы
-        Map<Class<? extends Organism>, Integer> goatRules = new HashMap<>();
-        goatRules.put(Plant.class, 100);
-        targetMatrix.put(Goat.class, goatRules);
-
-        //Вероятности для овцы
-        Map<Class<? extends Organism>, Integer> sheepRules = new HashMap<>();
-        sheepRules.put(Plant.class, 100);
-        targetMatrix.put(Sheep.class, sheepRules);
-
-        //Вероятности для кабана
-        Map<Class<? extends Organism>, Integer> boarRules = new HashMap<>();
-        boarRules.put(Plant.class, 100);
-        boarRules.put(Caterpillar.class, 90);
-        boarRules.put(Mouse.class, 50);
-        targetMatrix.put(Boar.class, boarRules);
-
-        //Вероятности для буйвола
-        Map<Class<? extends Organism>, Integer> buffaloRules = new HashMap<>();
-        buffaloRules.put(Plant.class, 100);
-        targetMatrix.put(Buffalo.class, buffaloRules);
-
-        //Вероятности для утки
-        Map<Class<? extends Organism>, Integer> duckRules = new HashMap<>();
-        duckRules.put(Plant.class, 100);
-        duckRules.put(Caterpillar.class, 90);
-        targetMatrix.put(Duck.class, duckRules);
-
-        //Вероятности для гусеницы
-        Map<Class<? extends Organism>, Integer> caterpillarRules = new HashMap<>();
-        caterpillarRules.put(Caterpillar.class, 100);
-        targetMatrix.put(Caterpillar.class, caterpillarRules);
-
-
+        // Вероятности для гусеницы
+        Map<OrganismType, Integer> caterpillarRules = new EnumMap<>(OrganismType.class);
+        caterpillarRules.put(OrganismType.PLANT, 100);
+        targetMatrix.put(OrganismType.CATERPILLAR, caterpillarRules);
     }
 
-    public static int getProbability(Class<? extends Animal> attacker, Class<? extends Organism> victim) {
-        if(!targetMatrix.containsKey(attacker)) {
+    private static void configureHerbivore(OrganismType herbivoreType) {
+        Map<OrganismType, Integer> rules = new EnumMap<>(OrganismType.class);
+        rules.put(OrganismType.PLANT, 100);
+        targetMatrix.put(herbivoreType, rules);
+    }
+
+    public static int getProbability(OrganismType attacker, OrganismType victim) {
+        Map<OrganismType, Integer> attackerRules = targetMatrix.get(attacker);
+        if (attackerRules == null) {
             return 0;
         }
-        return targetMatrix.get(attacker).getOrDefault(victim,0);
+        return attackerRules.getOrDefault(victim, 0);
     }
-
-
 }

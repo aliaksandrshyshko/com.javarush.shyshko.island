@@ -1,12 +1,13 @@
 package main.java.com.javarush.shyshko.island.model.organism.abstraction;
 
 import main.java.com.javarush.shyshko.island.config.SimulationConfig;
+import main.java.com.javarush.shyshko.island.factory.OrganismType;
 
 public abstract class Herbivore extends Animal {
 
-    public Herbivore(String name, double maxWeight, int maxOnCell, int maxSpeed, double foodNeeded) {
-        super(name, maxWeight, maxOnCell, maxSpeed, foodNeeded,
-                (attacker, food) -> SimulationConfig.getProbability(attacker.getClass(), food.getClass()) > 0
+    public Herbivore(OrganismType type, String name, double maxWeight, int maxSpeed, double foodNeeded) {
+        super(type, name, maxWeight, maxSpeed, foodNeeded,
+                (attacker, food) -> SimulationConfig.getProbability(attacker.getType(), food.getType()) > 0
         );
     }
 }

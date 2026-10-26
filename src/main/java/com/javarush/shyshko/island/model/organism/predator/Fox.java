@@ -1,11 +1,12 @@
 package main.java.com.javarush.shyshko.island.model.organism.predator;
 
+import main.java.com.javarush.shyshko.island.factory.OrganismType;
 import main.java.com.javarush.shyshko.island.model.organism.abstraction.Predator;
 
 public class Fox extends Predator {
 
     public Fox() {
-        super("Лиса",8, 5, 2, 2.0);
+        super(OrganismType.FOX, "Лиса",8, 2, 2.0);
     }
 
     @Override

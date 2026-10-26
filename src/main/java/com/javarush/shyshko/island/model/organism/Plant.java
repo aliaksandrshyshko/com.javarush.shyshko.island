@@ -1,10 +1,11 @@
 package main.java.com.javarush.shyshko.island.model.organism;
 
+import main.java.com.javarush.shyshko.island.factory.OrganismType;
 import main.java.com.javarush.shyshko.island.model.organism.abstraction.Organism;
 
 public class Plant extends Organism {
     public Plant() {
-        super("Сорняк", 1, 1);
+        super(OrganismType.PLANT, "Растение", 1);
     }
 
 

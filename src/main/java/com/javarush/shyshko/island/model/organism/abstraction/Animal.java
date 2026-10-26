@@ -8,8 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 import main.java.com.javarush.shyshko.island.config.SimulationConfig;
 import main.java.com.javarush.shyshko.island.factory.OrganismFactory;
-import main.java.com.javarush.shyshko.island.model.IslandMap;
+import main.java.com.javarush.shyshko.island.model.Island;
 import main.java.com.javarush.shyshko.island.model.Location;
+import main.java.com.javarush.shyshko.island.factory.OrganismType;
 
 @Getter
 @Setter
@@ -22,14 +23,13 @@ public abstract class Animal extends Organism {
     protected double foodNeeded;
     protected BiPredicate<Animal, Organism> huntingStrategy;
 
-
-    public Animal(String name,
+    public Animal(OrganismType type,
+                  String name,
                   double weight,
-                  int maxOnCell,
                   int maxSpeed,
                   double foodNeeded,
                   BiPredicate<Animal, Organism> huntingStrategy) {
-        super(name, weight, maxOnCell);
+        super(type, name, weight);
         this.foodNeeded = foodNeeded;
         this.currentSatiety = foodNeeded / 2;
         this.huntingStrategy = huntingStrategy;
@@ -37,49 +37,42 @@ public abstract class Animal extends Organism {
     }
 
     public void eat(Location loc) {
-        if (isDead || currentSatiety >= foodNeeded ) {
+        if (isDead || currentSatiety >= foodNeeded) {
             return;
         }
         Random rand = new Random();
 
         for (Organism food : loc.getOrganismsOfType(Organism.class)) {
-
             if (huntingStrategy.test(this, food)) {
 
-                long currentVersion = food.getVersionSnapshot();
-
-                if(food.tryLockUpdate(currentVersion)) {
-                    int probability = SimulationConfig.getProbability(this.getClass(), food.getClass());
+                    int probability = SimulationConfig.getProbability(this.getType(), food.getType());
                     if (probability > 0 && rand.nextInt(100) < probability) {
+
                         if (food instanceof Animal animal) {
                             animal.setDead(true);
-                            return;
                         }
                         loc.removeOrganism(food);
                         this.currentSatiety = Math.min(foodNeeded, this.currentSatiety + food.getWeight());
-                        System.out.println(this.getIcon() + this.getName() +  " [ID: " + this.getId() + "] съел "
-                                + food.getIcon() + food.getName()+ " [ID: " + food.getId() + "]");
                         break;
                     }
-                }
-
             }
         }
     }
 
+
     public void multiply(Location loc) {
-        if(isDead || hasMultipliedThisStep) {
+        if (isDead || hasMultipliedThisStep) {
             return;
         }
 
         List<Organism> list = loc.getOrganisms();
-        int count =0;
+        int count = 0;
         for (Object object : list) {
             if (object.getClass().equals(this.getClass())) {
                 count++;
             }
         }
-        if(count >= maxOnCell) {
+        if (count >= maxOnCell) {
             return;
         }
 
@@ -94,63 +87,45 @@ public abstract class Animal extends Organism {
             }
         }
 
-        if(partner != null) {
-            String typeName = this.getClass().getSimpleName();
-            Animal baby = (Animal) OrganismFactory.createOrganism(typeName, true);
+        if (partner != null) {
+            Animal baby = (Animal) OrganismFactory.createOrganism(this.getType(), true);
             baby.setMyLocation(loc);
             loc.addOrganism(baby);
             this.setHasMultipliedThisStep(true);
             partner.setHasMultipliedThisStep(true);
-            System.out.println("Родился " + baby.getIcon() + baby.getName() + " [ID: " + baby.getId()
-                    + "] от пары родителей [ID: " + this.getId() + " и " + partner.getId() + "]");
         }
     }
 
-    public void move(IslandMap islandMap) {
-        if(isDead || maxSpeed == 0) {
+    public void move(Island island) {
+        if (isDead || maxSpeed == 0) {
             return;
         }
 
         Random random = new Random();
         int step = random.nextInt(maxSpeed + 1);
-        if(step == 0) {
+        if (step == 0) {
             return;
         }
 
         int newX = myLocation.getX() + random.nextInt(-step, step + 1);
         int newY = myLocation.getY() + random.nextInt(-step, step + 1);
 
-        if(newX < 0) {
+        if (newX < 0) {
             newX = 0;
         }
-        if(newX >= islandMap.getWidth()) {
-            newX = islandMap.getWidth() -1;
+        if (newX >= island.getWidth()) {
+            newX = island.getWidth() - 1;
         }
-        if(newY < 0) {
+        if (newY < 0) {
             newY = 0;
         }
-        if(newY >= islandMap.getHeight()) {
-            newY = islandMap.getHeight() -1;
+        if (newY >= island.getHeight()) {
+            newY = island.getHeight() - 1;
         }
-
-        Location target = islandMap.getLocation(newX, newY);
-        if(target == null) {
-            return;
+        Location target = island.getLocation(newX, newY);
+        if (target != null) {
+            myLocation.moveAnimal(this, target);
         }
-        int count = 0;
-        List<Organism> targetList = target.getOrganisms();
-        for (Object o : targetList) {
-            if (o.getClass().equals(this.getClass())) {
-                count++;
-            }
-        }
-        if(count < maxOnCell) {
-            myLocation.removeOrganism(this);
-            target.addOrganism(this);
-            System.out.println(this.getIcon() + this.getName() + " [ID: " + this.getId() + "]" + " переместился в клетку [" + newX + ", " + newY + "]");
-        }
-
-
     }
 
     public void passTact() {
@@ -158,13 +133,9 @@ public abstract class Animal extends Organism {
             return;
         }
 
-        this.currentSatiety -= (this.foodNeeded * 0.15);
-        if(this.currentSatiety <= 0) {
+        this.currentSatiety -= (this.foodNeeded * 0.30);
+        if (this.currentSatiety <= 0) {
             setDead(true);
-            System.out.println(this.getIcon() + this.getName() +  " [ID: " + this.getId() + "]" +  " умер от голода");
-        } else {
-            String satietyStr = String.format("%.2f", this.currentSatiety);
-            System.out.println(this.getIcon() + this.getName() + " [ID: " + this.getId() + "]" +  " прожил этот такт. Текущая сытость: " + satietyStr + "/" + this.foodNeeded);
         }
         this.setHasMultipliedThisStep(false);
     }
