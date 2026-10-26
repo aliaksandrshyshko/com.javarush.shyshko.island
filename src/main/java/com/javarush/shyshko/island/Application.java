@@ -3,7 +3,6 @@ package main.java.com.javarush.shyshko.island;
 import main.java.com.javarush.shyshko.island.model.*;
 import main.java.com.javarush.shyshko.island.service.IslandEngine;
 import main.java.com.javarush.shyshko.island.service.IslandInitializer;
-import main.java.com.javarush.shyshko.island.service.IslandVisualizer;
 
 
 public class Application {

@@ -34,8 +34,4 @@ public abstract class Organism {
     public abstract String getIcon();
 
 
-    public int getMaxOnCell() {
-        return this.maxOnCell;
-    }
-
 }

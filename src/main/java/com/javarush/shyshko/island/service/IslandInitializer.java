@@ -32,7 +32,7 @@ public class IslandInitializer {
             int countToSpawn = RAND.nextInt(maxOnCell + 1);
 
             for (int i = 0; i < countToSpawn; i++) {
-                Organism organism = OrganismFactory.createOrganism(type, true);
+                Organism organism = OrganismFactory.createOrganism(type);
                 if (organism instanceof Animal animal) {
                     animal.setMyLocation(loc);
                     animal.setDead(false);

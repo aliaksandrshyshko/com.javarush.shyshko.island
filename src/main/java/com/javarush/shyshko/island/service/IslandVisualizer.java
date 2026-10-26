@@ -78,7 +78,7 @@ public class IslandVisualizer {
     private static void printHorizontalBorder(int width) {
         StringBuilder border = new StringBuilder("|");
         for (int i = 0; i < width; i++) {
-            border.append("-".repeat(CELL_WIDTH)).append("|");
+            border.repeat("-", CELL_WIDTH).append("|");
         }
         System.out.println(border);
     }

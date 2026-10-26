@@ -15,7 +15,7 @@ public class OrganismFactory {
     static {
         for (OrganismType type : OrganismType.values()) {
             try {
-                Organism sample = createOrganism(type, false);
+                Organism sample = createOrganism(type);
                 maxOnCellCache.put(type, sample.getMaxOnCell());
             } catch (Exception e) {
                 maxOnCellCache.put(type, 0);
@@ -32,7 +32,7 @@ public class OrganismFactory {
         return OrganismType.values();
     }
 
-    public static Organism createOrganism(OrganismType type, boolean isGameCycle) {
+    public static Organism createOrganism(OrganismType type) {
         return switch (type) {
             case WOLF -> new Wolf();
             case RABBIT -> new Rabbit();

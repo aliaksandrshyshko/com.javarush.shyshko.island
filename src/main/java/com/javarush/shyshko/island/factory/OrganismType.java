@@ -1,5 +1,8 @@
 package main.java.com.javarush.shyshko.island.factory;
 
+import lombok.Getter;
+
+@Getter
 public enum OrganismType {
     WOLF(30),
     RABBIT(15),
@@ -24,7 +27,4 @@ public enum OrganismType {
         this.maxOnCell = maxOnCell;
     }
 
-    public int getMaxOnCell() {
-        return this.maxOnCell;
-    }
 }

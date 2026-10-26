@@ -88,7 +88,7 @@ public abstract class Animal extends Organism {
         }
 
         if (partner != null) {
-            Animal baby = (Animal) OrganismFactory.createOrganism(this.getType(), true);
+            Animal baby = (Animal) OrganismFactory.createOrganism(this.getType());
             baby.setMyLocation(loc);
             loc.addOrganism(baby);
             this.setHasMultipliedThisStep(true);
